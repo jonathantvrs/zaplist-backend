@@ -5,6 +5,7 @@ async function up (knex){
         table.string('description', 500).notNullable();
         table.string('hash').notNullable();
         table.integer('amount').notNullable();
+        table.boolean('crowded').defaultTo(false);
         table.date('date').notNullable();
 
         table.unique('hash')
