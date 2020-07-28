@@ -10,7 +10,7 @@ class ItemController{
         const hashJaCadastrado = await verificaExistenciaHash(hash)
 
         if (!hashJaCadastrado){
-            return response.json({
+            return response.status(404).json({
                 error: "hash não encontrado"
             })
         }
@@ -21,7 +21,7 @@ class ItemController{
                         )[0]
 
         if (list.crowded){
-            return response.json({
+            return response.status(400).json({
                 error: "lista já está lotada"
             })
         }
@@ -39,7 +39,7 @@ class ItemController{
                     .update('crowded', true)
         }
 
-        return response.json({ message: 'criou' })
+        return response.status(201).json({ message: 'criou' })
     }
 }
 
