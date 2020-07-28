@@ -12,4 +12,8 @@ router.post('/list',
     middlewares.listPost(),
     listController.create)
 
+router.get('/list/:hash',
+    middlewares.listGet(),
+    listController.show)
+
 module.exports = router

@@ -13,6 +13,16 @@ class Middlewares{
             })
         )
     }
+
+    listGet(){
+        return(
+            celebrate({
+                params: Joi.object().keys({
+                    hash: Joi.string().required()
+                })
+            })
+        )
+    }
 }
 
 module.exports = Middlewares
