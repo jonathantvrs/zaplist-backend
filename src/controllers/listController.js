@@ -40,10 +40,14 @@ class ListController{
             })
         }
 
-        const list = await connection('zaplists').where({hash})
+        const list = (await connection('zaplists').where({hash}))[0]
+        const items = (await connection('zaplistitems')
+                                .select('name')
+                                .where('list_id', list.id))
 
-        return response.json(list[0])
+        return response.json({...list, items})
     }
 }
+
 
 module.exports = ListController

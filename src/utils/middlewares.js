@@ -23,6 +23,16 @@ class Middlewares{
             })
         )
     }
+
+    itemsPost(){
+        return(
+            celebrate({
+                body: Joi.object().keys({
+                    name: Joi.string().required()
+                })
+            })
+        )
+    }
 }
 
 module.exports = Middlewares
