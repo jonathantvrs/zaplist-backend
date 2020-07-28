@@ -20,9 +20,13 @@
   },
   "homepage": "https://github.com/jonathantvrs/zaplist-backend#readme",
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "jest": "^26.1.0",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
+    "celebrate": "^12.1.2",
+    "crypto-random-string": "^3.2.0",
     "express": "^4.17.1",
     "knex": "^0.21.2",
     "pg": "^8.3.0"
