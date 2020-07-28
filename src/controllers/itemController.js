@@ -15,14 +15,31 @@ class ItemController{
             })
         }
 
-        const list_id = (await connection('zaplists')
-                                .select('id')
+        const list = (await connection('zaplists')
+                                .select('id', 'amount', 'crowded')
                                 .where({hash})
-                        )[0].id
+                        )[0]
 
-        await connection('zaplistitems').insert({ name, list_id })
+        if (list.crowded){
+            return response.json({
+                error: "lista já está lotada"
+            })
+        }
 
-        return response.json({message: 'criou'})
+        await connection('zaplistitems').insert({ name, list_id: list.id })
+
+        const itemsRelacionados = (await connection('zaplistitems')
+                                            .where('list_id', list.id)
+                                            .count('id')
+                                    )[0].count
+        
+        if(Number(itemsRelacionados) === list.amount){
+            await connection('zaplists')
+                    .where('id', list.id)
+                    .update('crowded', true)
+        }
+
+        return response.json({ message: 'criou' })
     }
 }
 
