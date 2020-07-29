@@ -27,8 +27,27 @@ class ListController{
         }
 
         const listCreated = await connection('zaplists').insert(list, ['hash'])
-        return response.json(listCreated)
+        return response.status(201).json(listCreated)
+    }
+
+    async show(request, response){
+        const { hash } = request.params
+        const hashJaCadastrado = await verificaExistenciaHash(hash)
+
+        if (!hashJaCadastrado){
+            return response.status(400).json({
+                error: "hash não encontrado"
+            })
+        }
+
+        const list = (await connection('zaplists').where({hash}))[0]
+        const items = (await connection('zaplistitems')
+                                .select('name')
+                                .where('list_id', list.id))
+
+        return response.status(201).json({...list, items})
     }
 }
+
 
 module.exports = ListController
